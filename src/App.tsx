@@ -34,7 +34,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { Virtuoso } from 'react-virtuoso';
 import { QRCodeSVG } from 'qrcode.react';
-import { Routes, Route, useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, useSearchParams, useLocation, Navigate } from 'react-router-dom';
 import { 
   doc, 
   setDoc, 
@@ -181,6 +181,10 @@ const MenuForm: React.FC<{
 
 export default function App() {
   const { user, loading } = useAuth();
+  const location = useLocation();
+
+  // Check if current route is customer route (QR ordering)
+  const isCustomerRoute = location.pathname.match(/^\/order\/\d+/) || location.pathname.match(/^\/qr\/\d+/);
 
   if (loading) {
     return (
@@ -193,6 +197,17 @@ export default function App() {
     );
   }
 
+  // Customer route: không cần login
+  if (isCustomerRoute) {
+    return (
+      <Routes>
+        <Route path="/order/:tableId" element={<CustomerOrderPage />} />
+        <Route path="/qr/:tableId" element={<CustomerOrderPage />} />
+      </Routes>
+    );
+  }
+
+  // Admin route: cần login
   if (!user) {
     return <LoginPage />;
   }
@@ -200,7 +215,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<AppContent />} />
-      <Route path="/order/:tableId" element={<CustomerOrderPage />} />
+      <Route path="/dashboard" element={<AppContent />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
