@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "Table": {
+      "title": "Table",
+      "description": "Represents a table in the cafe.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "status": { "type": "string", "enum": ["Empty", "Serving", "Unpaid", "Paid", "Occupied"] },
+        "totalItems": { "type": "number" },
+        "totalPrice": { "type": "number" },
+        "currentOrder": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": { "type": "number" },
+              "name": { "type": "string" },
+              "quantity": { "type": "number" },
+              "price": { "type": "number" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      },
+      "required": ["id", "status", "currentOrder"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Represents a customer order for a table.",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": { "type": "number" },
+              "name": { "type": "string" },
+              "quantity": { "type": "number" },
+              "price": { "type": "number" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "status": { "type": "string", "enum": ["pending", "serving", "completed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["items", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/tables/{tableId}": {
+      "schema": "Table",
+      "description": "Stores table information and current orders."
+    },
+    "/tables/{tableId}/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Stores individual customer orders for a specific table."
+    }
+  }
+}

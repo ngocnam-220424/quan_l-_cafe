@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: tables
+    // Document ID: {tableId}
+    // Fields:
+    //   - id: number (required) - Table ID
+    //   - status: string (required, enum: Empty, Serving, Unpaid, Paid, Occupied) - Table status
+    //   - currentOrder: list (required) - List of order items
+    //
+    // Collection: tables/{tableId}/orders
+    // Document ID: {orderId}
+    // Fields:
+    //   - items: list (required) - List of order items
+    //   - status: string (required, enum: pending, serving, completed) - Order status
+    //   - createdAt: timestamp (required) - Order creation time
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidTable(data) {
+      return data.keys().hasAll(['id', 'status', 'currentOrder']) &&
+             data.id is number &&
+             data.status in ['Empty', 'Serving', 'Unpaid', 'Paid', 'Occupied'] &&
+             data.currentOrder is list &&
+             (!('totalItems' in data) || data.totalItems is number) &&
+             (!('totalPrice' in data) || data.totalPrice is number);
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll(['items', 'status', 'createdAt']) &&
+             data.items is list &&
+             data.status in ['pending', 'serving', 'completed'] &&
+             data.createdAt is timestamp;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    match /tables/{tableId} {
+      // Allow anyone to read table status and orders (for customer view)
+      allow read: if true;
+      
+      // Allow staff to update table status and orders
+      // Allow customers to update orders (adding items)
+      allow create, update: if isValidTable(request.resource.data);
+      
+      // Only staff should delete tables
+      allow delete: if isAuthenticated();
+
+      // Orders subcollection
+      match /orders/{orderId} {
+        // Allow anyone to create an order (customer)
+        allow create: if isValidOrder(request.resource.data);
+        
+        // Allow anyone to read and update orders (for POS and customer view)
+        allow read, update: if true;
+        
+        // Only staff should delete orders
+        allow delete: if isAuthenticated();
+      }
+    }
+  }
+}
