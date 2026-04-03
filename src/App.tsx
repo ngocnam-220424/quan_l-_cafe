@@ -29,7 +29,8 @@ import {
   AlertCircle,
   QrCode,
   Download,
-  LogOut
+  LogOut,
+  Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Virtuoso } from 'react-virtuoso';
@@ -79,6 +80,35 @@ const MENU_CATEGORIES = [
   'Kem – chè',
   'Hạt'
 ];
+
+// Helper functions for menu synchronization
+const saveMenuToStorage = (menu: MenuItem[]) => {
+  try {
+    localStorage.setItem('menu', JSON.stringify(menu));
+    // Dispatch custom event to notify other tabs/windows
+    window.dispatchEvent(new CustomEvent('menuUpdated', { detail: menu }));
+  } catch (error) {
+    console.error('Failed to save menu to localStorage:', error);
+  }
+};
+
+const loadMenuFromStorage = (): MenuItem[] => {
+  try {
+    const stored = localStorage.getItem('menu');
+    if (stored) {
+      const parsedMenu = JSON.parse(stored);
+      // Ensure all items have isAvailable field
+      return parsedMenu.map((item: MenuItem) => ({
+        ...item,
+        isAvailable: item.isAvailable !== undefined ? item.isAvailable : true
+      }));
+    }
+  } catch (error) {
+    console.error('Failed to load menu from localStorage:', error);
+  }
+  // Return empty array initially, will be initialized in useEffect
+  return [];
+};
 
 const MenuForm: React.FC<{
   item: MenuItem | null;
@@ -287,6 +317,17 @@ const AppUserSection: React.FC = () => {
           <p className="text-xs text-slate-500 truncate">{user?.email}</p>
         </div>
       </div>
+
+      {/* Authentication Status */}
+      <div className="px-4 py-2 mb-2">
+        <div className="flex items-center gap-2 text-xs">
+          <div className={`w-2 h-2 rounded-full ${user ? 'bg-green-500' : 'bg-red-500'}`}></div>
+          <span className="text-slate-500">
+            {user ? 'Đã đăng nhập' : 'Chưa đăng nhập'}
+          </span>
+        </div>
+      </div>
+
       <button
         onClick={handleLogout}
         disabled={isLogoutLoading}
@@ -302,7 +343,7 @@ const AppUserSection: React.FC = () => {
 function AppContent() {
   const [tables, setTables] = useState<Table[]>([]);
   const [history, setHistory] = useState<PaymentRecord[]>([]);
-  const [menu, setMenu] = useState<MenuItem[]>(menuData);
+  const [menu, setMenu] = useState<MenuItem[]>(() => loadMenuFromStorage());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -322,28 +363,52 @@ function AppContent() {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [menuSearchQuery, setMenuSearchQuery] = useState('');
+  const [showOutOfStock, setShowOutOfStock] = useState(false);
+
+  // Initialize menu data
+  useEffect(() => {
+    const data = localStorage.getItem('menu');
+    if (data) {
+      setMenu(JSON.parse(data));
+    } else {
+      const initData = menuData.map(item => ({
+        ...item,
+        isAvailable: true
+      }));
+      setMenu(initData);
+      localStorage.setItem('menu', JSON.stringify(initData));
+    }
+  }, []);
 
   useEffect(() => {
     tablesRef.current = tables;
   }, [tables]);
 
-  // Load menu from localStorage
+  // Listen for menu updates from other tabs/windows
   useEffect(() => {
-    const savedMenu = localStorage.getItem('menu');
-    if (savedMenu) {
-      try {
-        const parsedMenu = JSON.parse(savedMenu);
-        setMenu(parsedMenu);
-      } catch (err) {
-        console.error('Error loading menu from localStorage:', err);
-      }
-    }
-  }, []);
+    const handleMenuUpdate = (event: CustomEvent<MenuItem[]>) => {
+      setMenu(event.detail);
+    };
 
-  // Save menu to localStorage whenever menu changes
-  useEffect(() => {
-    localStorage.setItem('menu', JSON.stringify(menu));
-  }, [menu]);
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'menu' && event.newValue) {
+        try {
+          const parsedMenu = JSON.parse(event.newValue);
+          setMenu(parsedMenu);
+        } catch (err) {
+          console.error('Error parsing menu from storage event:', err);
+        }
+      }
+    };
+
+    window.addEventListener('menuUpdated', handleMenuUpdate as EventListener);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('menuUpdated', handleMenuUpdate as EventListener);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   // Test connection to Firestore
   useEffect(() => {
@@ -388,17 +453,27 @@ function AppContent() {
 
   // Real-time listener for tables
   useEffect(() => {
+    // Force loading to false after 10 seconds to prevent UI lock
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000);
+
     const unsubscribe = onSnapshot(collection(db, 'tables'), (snapshot) => {
+      clearTimeout(loadingTimeout);
       const updatedTables = snapshot.docs.map(doc => doc.data() as Table);
       setTables(updatedTables.sort((a, b) => a.id - b.id));
       setIsLoading(false);
     }, (err) => {
+      clearTimeout(loadingTimeout);
       console.error("Firestore error:", err);
       setError("Lỗi đồng bộ dữ liệu: " + err.message);
       setIsLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(loadingTimeout);
+      unsubscribe();
+    };
   }, []);
 
   // Real-time listener for orders of the selected table (or payment table)
@@ -733,6 +808,17 @@ function AppContent() {
     }
   };
 
+  const toggleAvailability = (id: string) => {
+    const updated = menu.map(item =>
+      item.id === id
+        ? { ...item, isAvailable: !item.isAvailable }
+        : item
+    );
+    setMenu(updated);
+    localStorage.setItem('menu', JSON.stringify(updated));
+    console.log('Menu after toggle:', updated);
+  };
+
   return (
     <div className="flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
       {isLoading && (
@@ -932,13 +1018,24 @@ function AppContent() {
               </div>
 
               <div className="px-6 py-3 bg-slate-50/50 border-b border-slate-100">
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm món..."
-                  value={menuSearchQuery}
-                  onChange={(e) => setMenuSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                />
+                <div className="flex items-center gap-4">
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm món..."
+                    value={menuSearchQuery}
+                    onChange={(e) => setMenuSearchQuery(e.target.value)}
+                    className="px-4 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  />
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={showOutOfStock}
+                      onChange={(e) => setShowOutOfStock(e.target.checked)}
+                      className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    Hiển thị món hết hàng
+                  </label>
+                </div>
               </div>
 
               <div className="px-6 py-2 bg-slate-50/50 border-b border-slate-100 flex items-center gap-2 overflow-x-auto no-scrollbar">
@@ -964,6 +1061,7 @@ function AppContent() {
                     menu
                       .filter(m => menuActiveCategory === 'All' || m.category === menuActiveCategory)
                       .filter(m => m.name.toLowerCase().includes(menuSearchQuery.toLowerCase()))
+                      .filter(m => showOutOfStock || m.isAvailable !== false)
                   }
                   itemContent={(index, item) => (
                     <div key={item.id} className="flex items-center hover:bg-slate-50/50 transition-colors group border-b border-slate-50">
@@ -982,6 +1080,13 @@ function AppContent() {
                       <div className="px-6 py-4 w-1/4">
                         <span className="font-bold text-emerald-600">{formatCurrency(item.price)}</span>
                       </div>
+                      <div className="px-6 py-4 w-1/4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                          item.isAvailable ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                        }`}>
+                          {item.isAvailable ? 'Còn hàng' : 'Hết hàng'}
+                        </span>
+                      </div>
                       <div className="px-6 py-4 w-32 flex items-center gap-2">
                         <button
                           onClick={() => {
@@ -992,6 +1097,17 @@ function AppContent() {
                           title="Sửa"
                         >
                           <Settings size={14} />
+                        </button>
+                        <button
+                          onClick={() => toggleAvailability(item.id)}
+                          className={`p-2 rounded-lg transition-all ${
+                            item.isAvailable
+                              ? 'bg-red-500 text-white hover:bg-red-600'
+                              : 'bg-green-500 text-white hover:bg-green-600'
+                          }`}
+                          title={item.isAvailable ? "Hết món" : "Mở bán"}
+                        >
+                          {item.isAvailable ? <X size={14} /> : <Check size={14} />}
                         </button>
                         <button
                           onClick={() => {
@@ -1376,7 +1492,7 @@ function AppContent() {
 function CustomerOrderPage() {
   const { tableId } = useParams<{ tableId: string }>();
   const isCustomerView = true;
-  const [menuItems] = useState<MenuItem[]>(menuData);
+  const [menu, setMenu] = useState<MenuItem[]>([]);
   const [cart, setCart] = useState<OrderItem[]>([]);
   const [isOrderSent, setIsOrderSent] = useState(false);
   const [menuActiveCategory, setMenuActiveCategory] = useState<string>('All');
@@ -1384,9 +1500,43 @@ function CustomerOrderPage() {
   const [editingNoteIndex, setEditingNoteIndex] = useState<number | null>(null);
   const [tempNote, setTempNote] = useState('');
 
+  // Load menu from localStorage
+  useEffect(() => {
+    const data = localStorage.getItem('menu');
+    if (data) {
+      setMenu(JSON.parse(data));
+    }
+  }, []);
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
   };
+
+  // Listen for menu updates from admin
+  useEffect(() => {
+    const handleMenuUpdate = (event: CustomEvent<MenuItem[]>) => {
+      setMenu(event.detail);
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'menu' && event.newValue) {
+        try {
+          const parsedMenu = JSON.parse(event.newValue);
+          setMenu(parsedMenu);
+        } catch (err) {
+          console.error('Error parsing menu from storage event:', err);
+        }
+      }
+    };
+
+    window.addEventListener('menuUpdated', handleMenuUpdate as EventListener);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('menuUpdated', handleMenuUpdate as EventListener);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const addToOrder = (item: MenuItem) => {
     const existingIndex = cart.findIndex(oi => oi.itemId === item.id && !oi.note);
@@ -1457,7 +1607,7 @@ function CustomerOrderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="h-screen bg-slate-50 flex flex-col font-sans">
       <header className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex justify-between items-center max-w-2xl mx-auto">
           <div className="flex items-center gap-3">
@@ -1483,7 +1633,7 @@ function CustomerOrderPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-2xl mx-auto w-full p-4 pb-32">
+      <main className="flex-1 max-w-2xl mx-auto w-full p-4 pb-32 overflow-hidden">
         {isOrderSent ? (
           <div className="h-full flex flex-col items-center justify-center text-center py-20">
             <motion.div 
@@ -1520,25 +1670,38 @@ function CustomerOrderPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              {menuItems
-                .filter(item => menuActiveCategory === 'All' || item.category === menuActiveCategory)
-                .map(item => {
-                  const itemsInOrder = cart.filter(oi => oi.itemId === item.id);
-                  const totalQty = itemsInOrder.reduce((sum, oi) => sum + oi.quantity, 0);
-                  
-                  return (
-                    <div key={item.id} className="bg-white p-4 rounded-3xl border border-slate-200 flex gap-4 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex-1 overflow-y-auto no-scrollbar">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {menu
+                  .filter(item => menuActiveCategory === 'All' || item.category === menuActiveCategory)
+                  .map(item => {
+                    const itemsInOrder = cart.filter(oi => oi.itemId === item.id);
+                    const totalQty = itemsInOrder.reduce((sum, oi) => sum + oi.quantity, 0);
+                    
+                    return (
+                    <div key={item.id} className={`bg-white p-4 rounded-3xl border border-slate-200 flex gap-4 shadow-sm hover:shadow-md transition-shadow relative ${
+                      !item.isAvailable ? "opacity-50" : ""
+                    }`}>
+                      {!item.isAvailable && (
+                        <div className="absolute inset-0 bg-slate-900/20 rounded-3xl flex items-center justify-center z-10">
+                          <span className="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                            Hết hàng
+                          </span>
+                        </div>
+                      )}
                       <div className="w-24 h-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
-                        <LazyImage 
+                        <LazyImage
                           src={item.image || '/images/placeholder.png'}
-                          alt={item.name} 
+                          alt={item.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div className="flex-1 flex flex-col justify-between py-1">
                         <div>
                           <h3 className="font-bold text-slate-800">{item.name}</h3>
+                          {!item.isAvailable && (
+                            <p className="text-red-500 text-sm font-bold">Hết hàng</p>
+                          )}
                           {!isCustomerView && (
                             <p className="text-emerald-600 font-bold mt-1">{formatCurrency(item.price)}</p>
                           )}
@@ -1547,19 +1710,29 @@ function CustomerOrderPage() {
                           {totalQty > 0 ? (
                             <div className="flex items-center gap-4 bg-slate-100 rounded-xl px-2 py-1">
                               <span className="text-xs font-bold text-slate-500 mr-2">Đã chọn {totalQty}</span>
-                              <button 
+                              <button
                                 onClick={() => addToOrder(item)}
                                 className="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center shadow-sm"
+                                disabled={!item.isAvailable}
                               >
                                 <Plus className="w-4 h-4" />
                               </button>
                             </div>
                           ) : (
-                            <button 
+                            <button
                               onClick={() => addToOrder(item)}
-                              className="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center shadow-md shadow-emerald-100 active:scale-90 transition-transform"
+                              disabled={!item.isAvailable}
+                              className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md shadow-emerald-100 active:scale-90 transition-transform ${
+                                !item.isAvailable
+                                  ? 'bg-slate-400 text-slate-200 cursor-not-allowed'
+                                  : 'bg-emerald-600 text-white'
+                              }`}
                             >
-                              <Plus className="w-5 h-5" />
+                              {!item.isAvailable ? (
+                                <X className="w-5 h-5" />
+                              ) : (
+                                <Plus className="w-5 h-5" />
+                              )}
                             </button>
                           )}
                         </div>
@@ -1567,6 +1740,7 @@ function CustomerOrderPage() {
                     </div>
                   );
                 })}
+              </div>
             </div>
           </>
         )}

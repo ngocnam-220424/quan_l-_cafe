@@ -8,6 +8,7 @@ export interface MenuItem {
   price: number;
   image: string;
   category?: string;
+  isAvailable?: boolean;
 }
 
 export interface OrderItem {
