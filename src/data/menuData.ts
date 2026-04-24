@@ -58,7 +58,8 @@ export const menuData: MenuItem[] = [
   { id: 'yogurt-13', name: 'Sữa chua khoai môn', price: 20000, category: 'Sữa chua', image: MENU_IMAGES['yogurt-13'] },
 
   // 🧋 TRÀ SỮA
-  { id: 'milktea-1', name: 'Trà sữa thái xanh', price: 15000, category: 'Trà sữa', image: MENU_IMAGES['milktea-1'] },
+  { id: 'milktea-0', name: 'Trà sữa thái xanh', price: 15000, category: 'Trà sữa', image: MENU_IMAGES['milktea-0'] },
+  { id: 'milktea-1', name: 'Trà sữa tuyền thống', price: 15000, category: 'Trà sữa', image: MENU_IMAGES['milktea-1'] },
   { id: 'milktea-2', name: 'Trà sữa khoai môn', price: 20000, category: 'Trà sữa', image: MENU_IMAGES['milktea-2'] },
   { id: 'milktea-3', name: 'Trà sữa socola', price: 15000, category: 'Trà sữa', image: MENU_IMAGES['milktea-3'] },
   { id: 'milktea-4', name: 'Trà sữa bạc hà', price: 15000, category: 'Trà sữa', image: MENU_IMAGES['milktea-4'] },

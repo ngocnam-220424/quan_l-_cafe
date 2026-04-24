@@ -48,7 +48,8 @@ export const MENU_IMAGES: Record<string, string> = {
   'yogurt-11': '/images/42.jpg',//sữa chua chanh dây
   'yogurt-12': '/images/43.jpg',  //sữa chua xoài
   'yogurt-13': '/images/51.jpg',// sữa chua khoai môn
-  'milktea-1': '/images/50.jpg',//trà sữa thái xanh
+  'milktea-0': '/images/50.jpg',
+  'milktea-1': '/images/49.png',//trà sữa thái xanh
   'milktea-2': '/images/51.jpg',//trà sữa khoai môn
   'milktea-3': '/images/53.jpg',
   'milktea-4': '/images/54,1.webp',
@@ -82,6 +83,6 @@ export const MENU_IMAGES: Record<string, string> = {
   'dessert-3': '/images/81.jpg',
   'dessert-4': '/images/82.jpg',
   'dessert-5': '/images/83.jpg',
-  'snack-1': '/images/85.jpg',
+  'snack-1': '/images/85,5.jpg',
   'snack-2': '/images/86.webp',
 };
