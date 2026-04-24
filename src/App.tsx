@@ -941,23 +941,26 @@ function AppContent() {
                 />
               </div>
 
-              <div className="px-6 py-2 bg-slate-50/50 border-b border-slate-100 flex items-center gap-2 overflow-x-auto no-scrollbar">
-                {MENU_CATEGORIES.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setMenuActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                      menuActiveCategory === cat 
-                      ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' 
-                      : 'text-slate-500 hover:bg-slate-100'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
+              <div className="flex-1 min-h-0 flex flex-col md:flex-row overflow-hidden">
+                <div className="w-full md:w-56 shrink-0 border-b md:border-b-0 md:border-r border-slate-100 bg-slate-50/50">
+                  <div className="max-h-52 md:max-h-none md:h-full p-4 flex flex-col gap-2 overflow-y-auto">
+                    {MENU_CATEGORIES.map(cat => (
+                      <button
+                        key={cat}
+                        onClick={() => setMenuActiveCategory(cat)}
+                        className={`w-full px-4 py-3 rounded-2xl text-sm font-bold text-left transition-all ${
+                          menuActiveCategory === cat
+                          ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100'
+                          : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-              <div className="flex-1 overflow-hidden">
+                <div className="flex-1 min-w-0 overflow-hidden">
                 <Virtuoso
                   style={{ height: '100%' }}
                   data={
@@ -1009,6 +1012,7 @@ function AppContent() {
                     </div>
                   )}
                 />
+                </div>
               </div>
             </div>
           ) : (
@@ -1093,20 +1097,23 @@ function AppContent() {
               <div className="flex-1 flex flex-col md:flex-row overflow-hidden relative">
                 {/* Menu Selection */}
                 <div className={`w-full md:w-[40%] border-r border-slate-100 flex flex-col bg-white ${showOrderMobile ? 'hidden md:flex' : 'flex'}`}>
-                  <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex gap-2 overflow-x-auto no-scrollbar">
-                    {MENU_CATEGORIES.map(cat => (
-                      <button
-                        key={cat}
-                        onClick={() => setSelectedCategory(cat)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                          selectedCategory === cat ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-slate-500 border border-slate-200'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="flex-1 overflow-y-auto p-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
+                  <div className="flex-1 min-h-0 flex flex-col lg:flex-row overflow-hidden">
+                    <div className="w-full lg:w-44 shrink-0 border-b lg:border-b-0 lg:border-r border-slate-100 bg-slate-50/50">
+                      <div className="max-h-44 lg:max-h-none lg:h-full p-4 flex flex-col gap-2 overflow-y-auto">
+                        {MENU_CATEGORIES.map(cat => (
+                          <button
+                            key={cat}
+                            onClick={() => setSelectedCategory(cat)}
+                            className={`w-full px-4 py-3 rounded-2xl text-sm font-bold text-left transition-all ${
+                              selectedCategory === cat ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-slate-500 border border-slate-200'
+                            }`}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
                     {filteredMenu.map(item => (
                       <button
                         key={item.id}
@@ -1122,6 +1129,7 @@ function AppContent() {
                         </div>
                       </button>
                     ))}
+                    </div>
                   </div>
                 </div>
 
@@ -1504,23 +1512,28 @@ function CustomerOrderPage() {
           </div>
         ) : (
           <>
-            <div className="flex gap-2 mb-6 overflow-x-auto no-scrollbar py-2 sticky top-[73px] bg-slate-50 z-10">
-              {MENU_CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setMenuActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all ${
-                    menuActiveCategory === cat 
-                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-100' 
-                    : 'bg-white text-slate-600 border border-slate-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="w-full md:w-56 md:shrink-0 md:sticky md:top-[89px]">
+                <div className="max-h-52 md:max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
+                  <div className="flex flex-col gap-2">
+                    {MENU_CATEGORIES.map(cat => (
+                      <button
+                        key={cat}
+                        onClick={() => setMenuActiveCategory(cat)}
+                        className={`w-full px-4 py-3 rounded-2xl text-sm font-bold text-left transition-all ${
+                          menuActiveCategory === cat
+                          ? 'bg-emerald-600 text-white shadow-md shadow-emerald-100'
+                          : 'bg-slate-50 text-slate-600 border border-slate-200'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-            <div className="grid grid-cols-1 gap-4">
+              <div className="min-w-0 flex-1 grid grid-cols-1 gap-4">
               {menuItems
                 .filter(item => menuActiveCategory === 'All' || item.category === menuActiveCategory)
                 .map(item => {
@@ -1567,6 +1580,7 @@ function CustomerOrderPage() {
                     </div>
                   );
                 })}
+              </div>
             </div>
           </>
         )}
