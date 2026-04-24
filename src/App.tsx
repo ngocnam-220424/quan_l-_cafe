@@ -1512,15 +1512,15 @@ function CustomerOrderPage() {
           </div>
         ) : (
           <>
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="w-full md:w-56 md:shrink-0 md:sticky md:top-[89px]">
-                <div className="max-h-52 md:max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
-                  <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-6 items-stretch">
+              <div className="w-full md:sticky md:top-[89px]">
+                <div className="max-h-52 md:max-h-none rounded-3xl border border-slate-200 bg-white p-3 shadow-sm flex flex-col md:flex-row md:overflow-x-auto overflow-y-auto gap-2">
+                  <div className="contents">
                     {MENU_CATEGORIES.map(cat => (
                       <button
                         key={cat}
                         onClick={() => setMenuActiveCategory(cat)}
-                        className={`w-full px-4 py-3 rounded-2xl text-sm font-bold text-left transition-all ${
+                        className={`w-full md:w-auto px-4 py-3 rounded-2xl text-sm font-bold whitespace-normal break-words text-left transition-all ${
                           menuActiveCategory === cat
                           ? 'bg-emerald-600 text-white shadow-md shadow-emerald-100'
                           : 'bg-slate-50 text-slate-600 border border-slate-200'
