@@ -45,12 +45,48 @@ service cloud.firestore {
              data.createdAt is timestamp;
     }
 
+    function isValidMenuItem(data) {
+      return data.keys().hasAll(['id', 'name', 'price', 'image', 'category']) &&
+             data.id is string &&
+             data.name is string &&
+             data.price is number &&
+             data.price > 0 &&
+             data.image is string &&
+             data.category is string;
+    }
+
+    function isValidInventoryItem(data) {
+      return data.keys().hasAll(['id', 'name', 'unit', 'stock', 'minStock', 'updatedAt']) &&
+             data.id is string &&
+             data.name is string &&
+             data.unit is string &&
+             data.stock is number &&
+             data.stock >= 0 &&
+             data.minStock is number &&
+             data.minStock >= 0;
+    }
+
     // ===============================================================
     // Rules
     // ===============================================================
 
     match /test/{docId} {
       allow read: if true;
+    }
+
+
+    match /menuItems/{menuItemId} {
+      // Customers can read menu from QR page. Only logged-in staff/admin can change menu.
+      allow read: if true;
+      allow create, update: if isAuthenticated() && isValidMenuItem(request.resource.data);
+      allow delete: if isAuthenticated();
+    }
+
+    match /inventoryItems/{inventoryItemId} {
+      // Staff/admin quản lý kho; trang thống kê cần đọc dữ liệu tồn kho.
+      allow read: if true;
+      allow create, update: if isAuthenticated() && isValidInventoryItem(request.resource.data);
+      allow delete: if isAuthenticated();
     }
 
     match /tables/{tableId} {
