@@ -1,0 +1,597 @@
+[
+  {
+    "id": "coffee-0",
+    "name": "Cà phê phin sữa",
+    "basePrice": 15000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881165/menu_items/vsvzfducuhfsqxoprp0v.jpg"
+  },
+  {
+    "id": "coffee-1",
+    "name": "Cà phê phin đen",
+    "basePrice": 15000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881578/menu_items/ig60tesziodvyaixbpzy.jpg"
+  },
+  {
+    "id": "coffee-2",
+    "name": "Cà phê ép sữa",
+    "basePrice": 15000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881759/menu_items/n8p1f1klulhn4r6q0ohz.jpg"
+  },
+  {
+    "id": "coffee-3",
+    "name": "Cà phê ép đen",
+    "basePrice": 15000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881664/menu_items/d2ar6ms6oshev7h8rcdk.jpg"
+  },
+  {
+    "id": "coffee-4",
+    "name": "Cà phê sữa đá",
+    "basePrice": 18000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881837/menu_items/ht0rz37likd9ueumhmln.jpg"
+  },
+  {
+    "id": "coffee-5",
+    "name": "Cà phê đen đá",
+    "basePrice": 15000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881846/menu_items/vqohwvsew7l5dw21zdq1.png"
+  },
+  {
+    "id": "coffee-6",
+    "name": "Cà phê sữa tươi",
+    "basePrice": 20000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881894/menu_items/aabomsnf9j9dgaajusjj.webp"
+  },
+  {
+    "id": "coffee-7",
+    "name": "Cà phê muối",
+    "basePrice": 25000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881862/menu_items/l6eug6yqjdnifvzygnbl.jpg"
+  },
+  {
+    "id": "coffee-8",
+    "name": "Bạc xỉu đá",
+    "basePrice": 20000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881884/menu_items/psu31fyt4jadoh4v4qlq.jpg"
+  },
+  {
+    "id": "coffee-9",
+    "name": "Bạc xỉu nóng",
+    "basePrice": 20000,
+    "category": "Coffee",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773881908/menu_items/hnvquxkqp1nloenkoekv.jpg"
+  },
+  {
+    "id": "coffee-10",
+    "name": "Bạc xỉu kem",
+    "basePrice": 25000,
+    "category": "Coffee",
+    "imageUrl": "https://picsum.photos/seed/coffee-10/400/400"
+  },
+  {
+    "id": "coffee-11",
+    "name": "Cacao đá",
+    "basePrice": 20000,
+    "category": "Coffee",
+    "imageUrl": "https://picsum.photos/seed/coffee-11/400/400"
+  },
+  {
+    "id": "coffee-12",
+    "name": "Cacao nóng",
+    "basePrice": 20000,
+    "category": "Coffee",
+    "imageUrl": "https://picsum.photos/seed/coffee-12/400/400"
+  },
+  {
+    "id": "coffee-13",
+    "name": "Cacao kem",
+    "basePrice": 25000,
+    "category": "Coffee",
+    "imageUrl": "https://picsum.photos/seed/coffee-13/400/400"
+  },
+  {
+    "id": "coffee-14",
+    "name": "Milo dầm",
+    "basePrice": 25000,
+    "category": "Coffee",
+    "imageUrl": "https://picsum.photos/seed/coffee-14/400/400"
+  },
+  {
+    "id": "tea-0",
+    "name": "Chanh đá",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-0/400/400"
+  },
+  {
+    "id": "tea-1",
+    "name": "Chanh nóng",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-1/400/400"
+  },
+  {
+    "id": "tea-2",
+    "name": "Trà đào đá",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-2/400/400"
+  },
+  {
+    "id": "tea-3",
+    "name": "Trà đào nóng",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-3/400/400"
+  },
+  {
+    "id": "tea-4",
+    "name": "Trà đào cam sả",
+    "basePrice": 25000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-4/400/400"
+  },
+  {
+    "id": "tea-5",
+    "name": "Trà vải đá",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-5/400/400"
+  },
+  {
+    "id": "tea-6",
+    "name": "Trà đào tắc",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-6/400/400"
+  },
+  {
+    "id": "tea-7",
+    "name": "Trà lipton sữa",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-7/400/400"
+  },
+  {
+    "id": "tea-8",
+    "name": "Trà dâu",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-8/400/400"
+  },
+  {
+    "id": "tea-9",
+    "name": "Trà ổi",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-9/400/400"
+  },
+  {
+    "id": "tea-10",
+    "name": "Trà việt quất",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-10/400/400"
+  },
+  {
+    "id": "tea-11",
+    "name": "Trà xoài",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-11/400/400"
+  },
+  {
+    "id": "tea-12",
+    "name": "Trà gừng",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-12/400/400"
+  },
+  {
+    "id": "tea-13",
+    "name": "Trà gừng lipton",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-13/400/400"
+  },
+  {
+    "id": "tea-14",
+    "name": "Trà lipton đá",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-14/400/400"
+  },
+  {
+    "id": "tea-15",
+    "name": "Trà lipton nóng",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-15/400/400"
+  },
+  {
+    "id": "tea-16",
+    "name": "Trà tắc xí muội",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-16/400/400"
+  },
+  {
+    "id": "tea-17",
+    "name": "Trà tắc thái xanh",
+    "basePrice": 20000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-17/400/400"
+  },
+  {
+    "id": "tea-18",
+    "name": "Trà chanh nóng",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-18/400/400"
+  },
+  {
+    "id": "tea-19",
+    "name": "Trà chanh đá",
+    "basePrice": 15000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-19/400/400"
+  },
+  {
+    "id": "tea-20",
+    "name": "Trà trái cây nhiệt đới",
+    "basePrice": 25000,
+    "category": "Trà",
+    "imageUrl": "https://picsum.photos/seed/tea-20/400/400"
+  },
+  {
+    "id": "yogurt-0",
+    "name": "Sữa chua nếp cẩm",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-0/400/400"
+  },
+  {
+    "id": "yogurt-1",
+    "name": "Sữa chua việt quất",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-1/400/400"
+  },
+  {
+    "id": "yogurt-2",
+    "name": "Sữa chua cam",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-2/400/400"
+  },
+  {
+    "id": "yogurt-3",
+    "name": "Sữa chua dâu tây",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-3/400/400"
+  },
+  {
+    "id": "yogurt-4",
+    "name": "Sữa chua kiwi",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-4/400/400"
+  },
+  {
+    "id": "yogurt-5",
+    "name": "Sữa chua đào",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-5/400/400"
+  },
+  {
+    "id": "yogurt-6",
+    "name": "Sữa chua đá",
+    "basePrice": 15000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-6/400/400"
+  },
+  {
+    "id": "yogurt-7",
+    "name": "Sữa chua thạch",
+    "basePrice": 20000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-7/400/400"
+  },
+  {
+    "id": "yogurt-8",
+    "name": "Sữa chua hạt đác",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-8/400/400"
+  },
+  {
+    "id": "yogurt-9",
+    "name": "Sữa chua hũ",
+    "basePrice": 10000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-9/400/400"
+  },
+  {
+    "id": "yogurt-10",
+    "name": "Sữa chua chanh dây",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-10/400/400"
+  },
+  {
+    "id": "yogurt-11",
+    "name": "Sữa chua xoài",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-11/400/400"
+  },
+  {
+    "id": "yogurt-12",
+    "name": "Sữa chua khoai môn",
+    "basePrice": 25000,
+    "category": "Sữa chua",
+    "imageUrl": "https://picsum.photos/seed/yogurt-12/400/400"
+  },
+  {
+    "id": "milktea-0",
+    "name": "Trà sữa thái xanh",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-0/400/400"
+  },
+  {
+    "id": "milktea-1",
+    "name": "Trà sữa khoai môn",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-1/400/400"
+  },
+  {
+    "id": "milktea-2",
+    "name": "Trà sữa socola",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-2/400/400"
+  },
+  {
+    "id": "milktea-3",
+    "name": "Trà sữa bạc hà",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-3/400/400"
+  },
+  {
+    "id": "milktea-4",
+    "name": "Trà sữa dâu",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-4/400/400"
+  },
+  {
+    "id": "milktea-5",
+    "name": "Trà sữa kem trứng",
+    "basePrice": 25000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-5/400/400"
+  },
+  {
+    "id": "milktea-6",
+    "name": "Trà sữa matcha",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-6/400/400"
+  },
+  {
+    "id": "milktea-7",
+    "name": "Matcha trà xanh",
+    "basePrice": 20000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-7/400/400"
+  },
+  {
+    "id": "milktea-8",
+    "name": "Matcha latte",
+    "basePrice": 25000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-8/400/400"
+  },
+  {
+    "id": "milktea-9",
+    "name": "Matcha latte kem muối",
+    "basePrice": 30000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-9/400/400"
+  },
+  {
+    "id": "milktea-10",
+    "name": "Sữa tươi trân châu đường đen",
+    "basePrice": 25000,
+    "category": "Trà sữa",
+    "imageUrl": "https://picsum.photos/seed/milktea-10/400/400"
+  },
+  {
+    "id": "soda-0",
+    "name": "Soda chanh",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-0/400/400"
+  },
+  {
+    "id": "soda-1",
+    "name": "Soda bạc hà",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-1/400/400"
+  },
+  {
+    "id": "soda-2",
+    "name": "Soda dâu",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-2/400/400"
+  },
+  {
+    "id": "soda-3",
+    "name": "Soda việt quất",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-3/400/400"
+  },
+  {
+    "id": "soda-4",
+    "name": "Soda biển xanh",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-4/400/400"
+  },
+  {
+    "id": "soda-5",
+    "name": "Soda táo xanh",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-5/400/400"
+  },
+  {
+    "id": "soda-6",
+    "name": "Soda đào",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-6/400/400"
+  },
+  {
+    "id": "soda-7",
+    "name": "Soda dưa lưới",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-7/400/400"
+  },
+  {
+    "id": "soda-8",
+    "name": "Soda nho",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-8/400/400"
+  },
+  {
+    "id": "soda-9",
+    "name": "Soda cam",
+    "basePrice": 18000,
+    "category": "Soda",
+    "imageUrl": "https://picsum.photos/seed/soda-9/400/400"
+  },
+  {
+    "id": "juice-0",
+    "name": "Nước ép ổi",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-0/400/400"
+  },
+  {
+    "id": "juice-1",
+    "name": "Nước ép dưa hấu",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-1/400/400"
+  },
+  {
+    "id": "juice-2",
+    "name": "Nước ép dứa",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-2/400/400"
+  },
+  {
+    "id": "juice-3",
+    "name": "Nước ép cam",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-3/400/400"
+  },
+  {
+    "id": "juice-4",
+    "name": "Nước ép cà chua",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-4/400/400"
+  },
+  {
+    "id": "juice-5",
+    "name": "Nước ép cà rốt",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-5/400/400"
+  },
+  {
+    "id": "juice-6",
+    "name": "Nước ép táo",
+    "basePrice": 25000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-6/400/400"
+  },
+  {
+    "id": "juice-7",
+    "name": "Nước dừa",
+    "basePrice": 20000,
+    "category": "Nước ép",
+    "imageUrl": "https://picsum.photos/seed/juice-7/400/400"
+  },
+  {
+    "id": "dessert-0",
+    "name": "Kem plan",
+    "basePrice": 10000,
+    "category": "Kem – chè",
+    "imageUrl": "https://picsum.photos/seed/dessert-0/400/400"
+  },
+  {
+    "id": "dessert-1",
+    "name": "Kem ly",
+    "basePrice": 15000,
+    "category": "Kem – chè",
+    "imageUrl": "https://picsum.photos/seed/dessert-1/400/400"
+  },
+  {
+    "id": "dessert-2",
+    "name": "Kem trộn",
+    "basePrice": 25000,
+    "category": "Kem – chè",
+    "imageUrl": "https://picsum.photos/seed/dessert-2/400/400"
+  },
+  {
+    "id": "dessert-3",
+    "name": "Kem plan trân châu",
+    "basePrice": 15000,
+    "category": "Kem – chè",
+    "imageUrl": "https://picsum.photos/seed/dessert-3/400/400"
+  },
+  {
+    "id": "dessert-4",
+    "name": "Chè dưỡng nhan",
+    "basePrice": 20000,
+    "category": "Kem – chè",
+    "imageUrl": "https://picsum.photos/seed/dessert-4/400/400"
+  },
+  {
+    "id": "snack-0",
+    "name": "Hạt dưa đỏ",
+    "basePrice": 15000,
+    "category": "Hạt dưa – hạt hướng dương",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773884040/menu_items/nszondloeuoz3rwvetre.jpg"
+  },
+  {
+    "id": "snack-2",
+    "name": "Hạt hướng dương",
+    "basePrice": 15000,
+    "category": "Hạt dưa – hạt hướng dương",
+    "imageUrl": "https://res.cloudinary.com/dtyhqfmdr/image/upload/v1773884064/menu_items/ujk85xdw5ky83mxn7rj0.webp"
+  }
+]
